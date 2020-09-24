@@ -17,5 +17,19 @@ public class ShoppingAppController {
 			// Go to next page
 		}
 	}
+	
+	// Invoice Replace part
+	// User selects Replace Item
+	// User is prompted for invoice number
+	// User is prompted for item code in invoice
+	// Some kind of date check for 15 days?
+	// Return item ?????
+	
+	public void replace() {
+		
+	}
 
+	public void purchase() {
+		
+	}
 }

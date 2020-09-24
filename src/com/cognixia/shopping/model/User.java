@@ -1,11 +1,12 @@
 package com.cognixia.shopping.model;
 
+import java.util.List;
+
 public class User {
 	
 	private String email;
 	private String password;
-	private Invoice invoice;
-//	private List<Item> invoice;
+	private List<Invoice> invoiceList;
 	
 	public User(String email, String password) {
 		super();
@@ -13,12 +14,13 @@ public class User {
 		this.password = password;
 	}
 	
-	public User(String email, String password, Invoice invoice) {
+	public User(String email, String password, List<Invoice> invoiceList) {
 		super();
 		this.email = email;
 		this.password = password;
-		this.invoice = invoice;
+		this.invoiceList = invoiceList;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
@@ -31,12 +33,15 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Invoice getInvoice() {
-		return invoice;
+	public List<Invoice> getInvoiceList() {
+		return invoiceList;
 	}
-	public void setInvoice(Invoice invoice) {
-		this.invoice = invoice;
+	public void setInvoiceList(List<Invoice> invoiceList) {
+		this.invoiceList = invoiceList;
 	}
-	
+
+	public void addInvoice(Invoice invoice) {
+		this.invoiceList.add(invoice);
+	}
 
 }

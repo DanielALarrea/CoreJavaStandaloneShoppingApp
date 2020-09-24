@@ -11,6 +11,11 @@ public class Invoice {
 		
 	}
 	
+	public Invoice(int invoiceNum) {
+		super();
+		this.invoiceNum = invoiceNum;
+	}
+	
 	public Invoice(List<Item> itemList, int invoiceNum) {
 		super();
 		this.itemList = itemList;
@@ -23,6 +28,10 @@ public class Invoice {
 
 	public void setItemList(List<Item> itemList) {
 		this.itemList = itemList;
+	}
+	
+	public void addItem(Item item) {
+		this.itemList.add(item);
 	}
 
 	public int getInvoiceNum() {
