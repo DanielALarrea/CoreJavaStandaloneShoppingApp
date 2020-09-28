@@ -19,14 +19,33 @@ public class FakeDatabase {
 		userList.add(new User(email, password));
 	}
 	
+	public static void addNewUser(User user) {
+		userList.add(user);
+	}
+	
 	// Add an item to the "database"
 	public static void addNewItem(String name, String code, float price) {
 		itemList.add(new Item(name, code, price));
 	}
 	
+	public static void addNewItem(Item item) {
+		itemList.add(item);	
+	}
+	
 	// Add an invoice to the "database"
 	public static void addNewInvoice(int invoiceNum) {
 		invoiceList.add(new Invoice(invoiceNum));
+	}
+	
+	public static void addNewInvoice(Invoice invoice) {
+		invoiceList.add(invoice);
+	}
+	
+	// Testing all
+	public static void init() {
+		initUser();
+		initItems();
+		initInvoice();
 	}
 	
 	// Testing user
@@ -39,6 +58,15 @@ public class FakeDatabase {
 		addNewItem("Jacket", "Ja1", 20);
 		addNewItem("Jeans", "Je1", 10);
 		addNewItem("Shirt", "Sh1", 5);
+	}
+	
+	// Existing invoices
+	public static void initInvoice() {
+		Invoice invoice = new Invoice(1);
+		invoice.addItem(new Item("Jacket", "Ja1", 20));
+		invoice.addItem(new Item("Jeans", "Je1", 10));
+		invoice.addItem(new Item("Shirt", "Sh1", 5));
+		addNewInvoice(invoice);
 	}
 	
 	// Retrieve an item from the "database"

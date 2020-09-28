@@ -1,5 +1,6 @@
 package com.cognixia.shopping.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Invoice {
@@ -14,6 +15,7 @@ public class Invoice {
 	public Invoice(int invoiceNum) {
 		super();
 		this.invoiceNum = invoiceNum;
+		this.itemList = new ArrayList<Item>();
 	}
 	
 	public Invoice(List<Item> itemList, int invoiceNum) {
