@@ -9,7 +9,7 @@ public class Invoice {
 	private int invoiceNum;
 	
 	public Invoice() {
-		
+		this.itemList = new ArrayList<Item>();
 	}
 	
 	public Invoice(int invoiceNum) {
@@ -42,6 +42,11 @@ public class Invoice {
 
 	public void setInvoiceNum(int invoiceNum) {
 		this.invoiceNum = invoiceNum;
+	}
+
+	@Override
+	public String toString() {
+		return "Invoice [itemList=" + itemList + ", invoiceNum=" + invoiceNum + "]";
 	}
 
 }

@@ -69,12 +69,53 @@ public class FakeDatabase {
 		addNewInvoice(invoice);
 	}
 	
+	public static User getUser(String email, String password) {
+		for(User u: userList) {
+			if(u.getEmail().equals(email) && u.getPassword().equals(password)) {
+				return u;
+			}
+		}
+		
+		return new User("EMAIL NOT FOUND", "PASSWORD NOT FOUND");
+	}
+	
+	public static User getUser(int userIndex) {
+		for(int i = 0; i < userList.size(); i++) {
+			if(i == userIndex) {
+				return userList.get(userIndex);
+			}
+		}
+		
+		return new User("EMAIL NOT FOUND", "PASSWORD NOT FOUND");
+	}
+	
+	public static int getUserIndex(String email, String password) {
+		for(int i = 0; i < userList.size(); i++) {
+			User u = userList.get(i);
+			if(u.getEmail().equals(email) && u.getPassword().equals(password)) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
 	// Retrieve an item from the "database"
 	// Should only be used after checking the item exists
 	public static Item getItem(String itemCode) {
 		for(Item i: itemList) {
 			if(i.getCode().equals(itemCode)) {
 				return i;
+			}
+		}
+		
+		return new Item("NAME NOT FOUND", "CODE NOT FOUND", -1);
+	}
+	
+	public static Item getItem(int index) {
+		for(int i = 0; i < itemList.size(); i++) {
+			if((i+1) == index) {
+				return itemList.get(i);
 			}
 		}
 		
@@ -91,5 +132,21 @@ public class FakeDatabase {
 		}
 		
 		return new Invoice(-1);
+	}
+	
+	public static void updateUser(int userIndex, User user) {
+		User u = userList.get(userIndex);
+		u.setEmail(user.getEmail());
+		u.setPassword(user.getPassword());
+		u.setInvoiceList(user.getInvoiceList());
+	}
+	
+	public static void updateInvoice(Invoice invoice) {
+		for(Invoice iv: invoiceList) {
+			if(iv.getInvoiceNum() == invoice.getInvoiceNum()) {
+				iv = invoice;
+			}
+		}
+		
 	}
 }

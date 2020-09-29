@@ -1,5 +1,6 @@
 package com.cognixia.shopping.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -12,6 +13,7 @@ public class User {
 		super();
 		this.email = email;
 		this.password = password;
+		this.invoiceList = new ArrayList<Invoice>();
 	}
 	
 	public User(String email, String password, List<Invoice> invoiceList) {
