@@ -3,6 +3,8 @@ package com.cognixia.shopping.controller;
 import com.cognixia.shopping.model.Invoice;
 import com.cognixia.shopping.model.Item;
 import com.cognixia.shopping.repository.FakeDatabase;
+import com.cognixia.shopping.utility.ConsoleUtil;
+import com.cognixia.shopping.utility.ErrorUtil;
 import com.cognixia.shopping.utility.InputValidationUtil;
 
 public class ShoppingAppController {
@@ -18,22 +20,35 @@ public class ShoppingAppController {
 		return loggedInUserId;
 	}
 	
-	public static void register(String email, String password, String confirmPass) {
-		if(InputValidationUtil.validPassword(password) && password.equals(confirmPass)) {
-			FakeDatabase.addNewUser(email, password);
-			System.out.println("User registered");
+	public static void register(String email, String password) {
+		FakeDatabase.addNewUser(email, password);
+	}
+	
+	public static boolean validateRegisterPassword(String password, String confirmPass) {
+		if(InputValidationUtil.validPassword(password)) {
+			if(password.equals(confirmPass)) {
+				return true;
+			} else {
+				System.out.println(ErrorUtil.errorPasswordMatch());
+				return false;
+			}
 		} else {
-			System.out.println("Failed register");
+			System.out.println(ErrorUtil.errorPasswordCriteria());
+			return false;
 		}
 	}
 	
 	public static void login(String email, String password) {
+		isLoggedIn = true;
+		loggedInUserId = FakeDatabase.getUserIndex(email, password);
+	}
+	
+	public static boolean validateLogin(String email, String password) {
 		if(InputValidationUtil.validLogin(email, password)) {
-			isLoggedIn = true;
-			loggedInUserId = FakeDatabase.getUserIndex(email, password);
-			System.out.println("Logging in");
+			return true;
 		} else {
-			System.out.println("Failed log in");
+			System.out.println(ErrorUtil.errorLogin());
+			return false;
 		}
 	}
 	
@@ -74,6 +89,15 @@ public class ShoppingAppController {
 		
 	}
 	
+	// Check that the selected item exists in the database
+	public static boolean validatePurchase(int itemIndex) {
+		if(FakeDatabase.getItem(itemIndex - 1).getPrice() != -1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	// Invoice Replace part
 	// User selects Replace Item
 	// User is prompted for invoice number
@@ -81,8 +105,21 @@ public class ShoppingAppController {
 	// Some kind of date check for 15 days?
 	// Return item ?????
 	
-	public static void replace(int invoiceNum, int itemIndex) {
+	public static void replace(int itemIndex, int invoiceNum) {
+		Invoice orderInvoice = FakeDatabase.getInvoice(invoiceNum);
 		
+		orderInvoice.removeItem(itemIndex - 1);
+		
+		FakeDatabase.updateInvoice(orderInvoice);
+	}
+	
+	public static boolean validateReplace(int itemIndex, int invoiceNum) {
+		Invoice orderInvoice = FakeDatabase.getInvoice(invoiceNum);
+		if(InputValidationUtil.itemExistsInInvoice(itemIndex, orderInvoice)) {
+			return true;
+		}
+		
+		return false;
 	}
 
 }

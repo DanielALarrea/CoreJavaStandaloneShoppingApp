@@ -3,7 +3,7 @@ package com.cognixia.shopping.utility;
 // Contains messages to display when an error occurs
 public class ErrorUtil {
 	
-	// Display when registering and password is does not match criteria
+	// Display when registering and password does not match criteria
 	public static String errorPasswordCriteria() {
 		return "That password does not match the criteria";
 	}

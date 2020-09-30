@@ -50,12 +50,21 @@ public class InputValidationUtil {
 		return false;
 	}
 	
-	// Check that the item exists in the invoice
+	// Check that the item exists in the invoice - Based on itemCode
 	public static boolean itemExistsInInvoice(String itemCode, Invoice iv) {
 		for(Item i: iv.getItemList()) {
 			if(i.getCode().equals(itemCode)) {
 				return true;
 			}
+		}
+		
+		return false;
+	}
+	
+	// Check that the item exists in the invoice - Based on itemIndex
+	public static boolean itemExistsInInvoice(int itemIndex, Invoice iv) {
+		if(iv.getItemFromList(itemIndex) != null) {
+			return true;
 		}
 		
 		return false;

@@ -8,25 +8,30 @@ import com.cognixia.shopping.repository.FakeDatabase;
 // Contains strings to display as UI
 public class ConsoleUtil {
 	
+	// Ask for input string
+	public static String askInput() {
+		return "Choice: ";
+	}
+	
 	// Internal utility strings
 
-	public static String lineBreak() {
+	private static String lineBreak() {
 		return "\n";
 	}
 	
-	public static String blockEdge() {
+	private static String blockEdge() {
 		return "+===============================================+" + lineBreak();
 	}
 	
-	public static String header() {
+	private static String header() {
 		return "           Standalone E-commerce App" + lineBreak();
 	}
 	
-	public static String headerInvoice() {
+	private static String headerInvoice() {
 		return "       Standalone E-commerce App Invoice" + lineBreak();
 	}
 	
-	public static String printSpaces(int spaceCount) {
+	private static String printSpaces(int spaceCount) {
 		String spaces = "";
 		for(int j = 0; j < spaceCount; j++) {
 			spaces += " ";
@@ -93,7 +98,7 @@ public class ConsoleUtil {
 	
 	// Under construction, need to figure out how user and invoice interact
 	// Invoice Menu - Display invoice
-	public static String invoiceMenu(int invoiceNum) {
+	public static String invoiceMenu(int invoiceNum, String customerName) {
 		int index = 0;
 		List<Item> items = FakeDatabase.getInvoice(invoiceNum).getItemList();
 		String itemName = "";
@@ -104,7 +109,8 @@ public class ConsoleUtil {
 		
 		String invoiceMenu = headerInvoice();
 		invoiceMenu += blockEdge();
-		invoiceMenu += "|  Invoice no : " + invoiceNum + printSpaces(32 - Integer.toString(invoiceNum).length()) + "|" + lineBreak();
+		invoiceMenu += "|  Customer Name : " + customerName + printSpaces(29 - customerName.length()) + "|" + lineBreak();
+		invoiceMenu += "|  Invoice No : " + invoiceNum + printSpaces(32 - Integer.toString(invoiceNum).length()) + "|" + lineBreak();
 		invoiceMenu += "|       Item       Item Code       Price        |" + lineBreak();
 		for(int i = 1; i < items.size() + 1; i++) {
 			itemName = items.get(i - 1).getName();
@@ -128,6 +134,5 @@ public class ConsoleUtil {
 		invoiceMenu += blockEdge();
 		return invoiceMenu;
 	}
-	
 
 }

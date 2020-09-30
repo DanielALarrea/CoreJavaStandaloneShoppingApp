@@ -27,6 +27,10 @@ public class Invoice {
 	public List<Item> getItemList() {
 		return itemList;
 	}
+	
+	public Item getItemFromList(int itemIndex) {
+		return itemList.get(itemIndex);
+	}
 
 	public void setItemList(List<Item> itemList) {
 		this.itemList = itemList;
@@ -34,6 +38,10 @@ public class Invoice {
 	
 	public void addItem(Item item) {
 		this.itemList.add(item);
+	}
+	
+	public void removeItem(int itemIndex) {
+		this.itemList.remove(itemIndex);
 	}
 
 	public int getInvoiceNum() {
