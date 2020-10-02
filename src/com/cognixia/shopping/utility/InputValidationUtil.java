@@ -50,6 +50,7 @@ public class InputValidationUtil {
 		return false;
 	}
 	
+	// Check that the invoice belongs to the given user
 	public static boolean invoiceBelongsToUser(int invoiceNum, int userId) {
 		for(Invoice iv: FakeDatabase.invoiceList) {
 			if(iv.getInvoiceNum() == invoiceNum && iv.getUserId() == userId) {

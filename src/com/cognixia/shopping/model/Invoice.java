@@ -72,7 +72,8 @@ public class Invoice {
 
 	@Override
 	public String toString() {
-		return "Invoice [itemList=" + itemList + ", invoiceNum=" + invoiceNum + "]";
+		return "Invoice [itemList=" + itemList + ", invoiceNum=" + invoiceNum + ", userId=" + userId
+				+ ", timeOfCreation=" + timeOfCreation + "]";
 	}
 
 }

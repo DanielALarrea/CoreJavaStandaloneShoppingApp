@@ -1,7 +1,6 @@
 package com.cognixia.shopping.repository;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +73,7 @@ public class FakeDatabase {
 		addNewInvoice(invoice);
 	}
 	
+	// Get user by their email and password
 	public static User getUser(String email, String password) {
 		for(User u: userList) {
 			if(u.getEmail().equals(email) && u.getPassword().equals(password)) {
@@ -84,6 +84,7 @@ public class FakeDatabase {
 		return new User("NAME NOT FOUND", "EMAIL NOT FOUND", "PASSWORD NOT FOUND");
 	}
 	
+	// Get user by their index in the database
 	public static User getUser(int userIndex) {
 		for(int i = 0; i < userList.size(); i++) {
 			if(i == userIndex) {
@@ -94,6 +95,7 @@ public class FakeDatabase {
 		return new User("NAME NOT FOUND", "EMAIL NOT FOUND", "PASSWORD NOT FOUND");
 	}
 	
+	// Get user's index by their email and password
 	public static int getUserIndex(String email, String password) {
 		for(int i = 0; i < userList.size(); i++) {
 			User u = userList.get(i);
@@ -105,6 +107,7 @@ public class FakeDatabase {
 		return -1;
 	}
 	
+	// Get user's name by their index
 	public static String getUserNameByIndex(int userIndex) {
 		return getUser(userIndex).getName();
 	}
@@ -121,6 +124,7 @@ public class FakeDatabase {
 		return new Item("NAME NOT FOUND", "CODE NOT FOUND", -1);
 	}
 	
+	// Get item by their index
 	public static Item getItem(int index) {
 		for(int i = 0; i < itemList.size(); i++) {
 			if((i+1) == index) {
@@ -143,6 +147,7 @@ public class FakeDatabase {
 		return new Invoice(-1);
 	}
 	
+	// Update user in database
 	public static void updateUser(int userIndex, User user) {
 		User u = userList.get(userIndex);
 		u.setEmail(user.getEmail());
@@ -150,6 +155,7 @@ public class FakeDatabase {
 		u.setInvoiceList(user.getInvoiceList());
 	}
 	
+	// Update invoice in database
 	public static void updateInvoice(Invoice invoice) {
 		for(Invoice iv: invoiceList) {
 			if(iv.getInvoiceNum() == invoice.getInvoiceNum()) {

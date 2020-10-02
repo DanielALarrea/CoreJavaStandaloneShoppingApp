@@ -56,10 +56,12 @@ public class ConsoleUtil {
 		return "+===============================================+" + lineBreak();
 	}
 	
+	// Header for most menus
 	private static String header() {
 		return "           Standalone E-commerce App" + lineBreak();
 	}
 	
+	// Header when in invoice menu
 	private static String headerInvoice() {
 		return "       Standalone E-commerce App Invoice" + lineBreak();
 	}
@@ -109,6 +111,7 @@ public class ConsoleUtil {
 		String itemMenu = header();
 		itemMenu += blockEdge();
 		itemMenu += "|       Item       Item Code       Price        |" + lineBreak();
+		// Create item list based on items in database
 		for(int i = 1; i < items.size() + 1; i++) {
 			itemName = items.get(i - 1).getName();
 			itemCode = items.get(i - 1).getCode();
@@ -129,7 +132,6 @@ public class ConsoleUtil {
 		return itemMenu;
 	}
 	
-	// Under construction, need to figure out how user and invoice interact
 	// Invoice Menu - Display invoice
 	public static String invoiceMenu(int invoiceNum, String customerName, LocalDate invoiceDate) {
 		int index = 0;
@@ -145,6 +147,7 @@ public class ConsoleUtil {
 		invoiceMenu += "|  Customer Name : " + customerName + "  Date: " + invoiceDate + printSpaces(11 - customerName.length()) + "|" + lineBreak();
 		invoiceMenu += "|  Invoice No : " + invoiceNum + printSpaces(32 - Integer.toString(invoiceNum).length()) + "|" + lineBreak();
 		invoiceMenu += "|       Item       Item Code       Price        |" + lineBreak();
+		// Create item list based on items in invoice
 		for(int i = 1; i < items.size() + 1; i++) {
 			itemName = items.get(i - 1).getName();
 			itemCode = items.get(i - 1).getCode();
@@ -162,6 +165,7 @@ public class ConsoleUtil {
 			totalPrice += itemPrice;
 		}
 		invoiceMenu += "|                                               |" + lineBreak();
+		// Display total price of items on invoice
 		invoiceMenu += "|    Total = $" + (totalPrice) + printSpaces(34 - Float.toString(totalPrice).length()) + "|" + lineBreak();
 		invoiceMenu += "|    " + (index + 1) + ". EXIT                                    |" + lineBreak();
 		invoiceMenu += blockEdge();

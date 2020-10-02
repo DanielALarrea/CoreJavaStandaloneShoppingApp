@@ -1,6 +1,5 @@
 package com.cognixia.shopping;
 
-import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -63,7 +62,6 @@ public class ShoppingApplication {
 				// Receive inputs for registering
 				System.out.println(ConsoleUtil.askName());
 				nameInput = scan.nextLine();
-				scan.nextLine();
 				System.out.println(ConsoleUtil.askEmail());
 				emailInput = scan.next();
 				scan.nextLine();
@@ -160,6 +158,7 @@ public class ShoppingApplication {
 				}
 				break;
 			case 3:
+				// Sets logged in status and clears logged in user id
 				System.out.println(ResponseUtil.logout());
 				ShoppingAppController.logout();
 				break;
@@ -173,6 +172,7 @@ public class ShoppingApplication {
 		}
 	}
 	
+	// Menu to display list of items available
 	private static void runItemMenu(Scanner scan) {
 		int menuChoice = -1;
 		int invoiceChoice = -1;
@@ -184,14 +184,26 @@ public class ShoppingApplication {
 			menuChoice = scan.nextInt();
 			scan.nextLine();
 
+			/*
+			 * Menu Options:
+			 * Select item in the list
+			 * Exit and return to the home menu
+			 */
+			
 			if(menuChoice >= 1 && menuChoice <= FakeDatabase.itemList.size() + 1) {
 				for(int j = 1; j <= FakeDatabase.itemList.size(); j++) {
 					if(j == menuChoice) {
+						// Check that the option selected is on the list
 						if(ShoppingAppController.validatePurchase(menuChoice)) {
+							// Ask for what invoice to add the item to
 							System.out.println(ConsoleUtil.askInvoiceNumber());
 							invoiceChoice = scan.nextInt();
 							scan.nextLine();
+							
+							// Check if the invoice exists already or not
 							if(InputValidationUtil.invoiceExists(invoiceChoice)) {
+								// Check if the invoice belongs to the logged in user
+								// Only proceed if true
 								if(ShoppingAppController.validateInvoiceBelongsToUser(invoiceChoice, ShoppingAppController.checkLoggedUserId())) {
 									System.out.println(ResponseUtil.addItemToInvoice(FakeDatabase.getItem(menuChoice).getCode(), invoiceChoice));
 									ShoppingAppController.purchase(menuChoice, invoiceChoice, ShoppingAppController.checkLoggedUserId());
@@ -201,9 +213,14 @@ public class ShoppingApplication {
 									break;
 								}
 							} else {
+								// Ask to create a new invoice
 								System.out.println(ResponseUtil.creatingInvoice(invoiceChoice));
 								createInvoice = scan.next();
 								scan.nextLine();
+								
+								// Y or y will say yes and create the invoice
+								// N or n will say no and return to the home menu
+								// Anything else will be an error and return to the home menu
 								if(createInvoice.equalsIgnoreCase("Y")) {
 									System.out.println(ResponseUtil.addItemToInvoice(FakeDatabase.getItem(menuChoice).getCode(), invoiceChoice));
 									ShoppingAppController.purchase(menuChoice, invoiceChoice, ShoppingAppController.checkLoggedUserId());
@@ -219,6 +236,7 @@ public class ShoppingApplication {
 							System.out.println(ErrorUtil.errorItem());
 							break;
 						}
+					// Option selected in Exit
 					} else if (menuChoice == FakeDatabase.itemList.size() + 1) {
 						break;
 					}
@@ -231,21 +249,29 @@ public class ShoppingApplication {
 			scan.nextLine();
 		}
 		
+		// Return to home menu when done
 		runHomeMenu(scan);
 	}
 	
+	// Menu to viewing an invoice
 	private static void runInvoiceMenu(Scanner scan, int invoiceNum, String customerName) {
 		int itemChoice = -1;
 		Invoice currentInvoice = FakeDatabase.getInvoice(invoiceNum);
-		// Need to start with an invoice option
 		System.out.println(ConsoleUtil.invoiceMenu(invoiceNum, customerName, currentInvoice.getTimeOfCreation()));
 		System.out.println(ConsoleUtil.askItemIndex());
+		
 		try {
 			itemChoice = scan.nextInt();
 			scan.nextLine();
 
+			/*
+			 * Menu Options
+			 * Items in the invoice
+			 * Exit and return to home menu
+			 */
 			if(itemChoice >= 1 && itemChoice <= currentInvoice.getItemList().size() + 1) {
 				for(int i = 1; i <= currentInvoice.getItemList().size(); i++) {
+					// Remove item from invoice to be replaced
 					if(i == itemChoice) {
 						System.out.println(ResponseUtil.replaceItemInInvoice(FakeDatabase.getItem(itemChoice).getCode(), invoiceNum));
 						ShoppingAppController.replace(i, invoiceNum);
@@ -262,6 +288,7 @@ public class ShoppingApplication {
 			scan.nextLine();
 		}
 		
+		// Return to home menu when done
 		runHomeMenu(scan);
 	}
 

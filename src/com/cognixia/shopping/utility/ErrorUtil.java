@@ -28,6 +28,7 @@ public class ErrorUtil {
 		return "Invoice not found";
 	}
 	
+	// Display when user attempts to access invoice that belongs to another user
 	public static String errorInvoiceExists() {
 		return "Invoice belongs to another user";
 	}
@@ -37,6 +38,7 @@ public class ErrorUtil {
 		return "Item not on invoice";
 	}
 	
+	// Display when user gives an incorrect input
 	public static String errorMenu() {
 		return "Invalid input";
 	}
