@@ -1,5 +1,7 @@
 package com.cognixia.shopping.repository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +17,8 @@ public class FakeDatabase {
 	public static List<Invoice> invoiceList = new ArrayList<Invoice>();
 	
 	// Add a user to the "database"
-	public static void addNewUser(String email, String password) {
-		userList.add(new User(email, password));
+	public static void addNewUser(String name, String email, String password) {
+		userList.add(new User(name, email, password));
 	}
 	
 	public static void addNewUser(User user) {
@@ -50,7 +52,8 @@ public class FakeDatabase {
 	
 	// Testing user
 	public static void initUser() {
-		addNewUser("email@gmail.com", "P@ssw0rd");
+//		addNewUser("John", "email@gmail.com", "P@ssw0rd");
+		addNewUser("name", "1", "2");
 	}
 
 	// Items to purchase
@@ -66,6 +69,8 @@ public class FakeDatabase {
 		invoice.addItem(new Item("Jacket", "Ja1", 20));
 		invoice.addItem(new Item("Jeans", "Je1", 10));
 		invoice.addItem(new Item("Shirt", "Sh1", 5));
+		invoice.setUserId(0);
+		invoice.setTimeOfCreation(LocalDate.now());
 		addNewInvoice(invoice);
 	}
 	
@@ -76,7 +81,7 @@ public class FakeDatabase {
 			}
 		}
 		
-		return new User("EMAIL NOT FOUND", "PASSWORD NOT FOUND");
+		return new User("NAME NOT FOUND", "EMAIL NOT FOUND", "PASSWORD NOT FOUND");
 	}
 	
 	public static User getUser(int userIndex) {
@@ -86,7 +91,7 @@ public class FakeDatabase {
 			}
 		}
 		
-		return new User("EMAIL NOT FOUND", "PASSWORD NOT FOUND");
+		return new User("NAME NOT FOUND", "EMAIL NOT FOUND", "PASSWORD NOT FOUND");
 	}
 	
 	public static int getUserIndex(String email, String password) {
@@ -98,6 +103,10 @@ public class FakeDatabase {
 		}
 		
 		return -1;
+	}
+	
+	public static String getUserNameByIndex(int userIndex) {
+		return getUser(userIndex).getName();
 	}
 	
 	// Retrieve an item from the "database"
@@ -121,7 +130,7 @@ public class FakeDatabase {
 		
 		return new Item("NAME NOT FOUND", "CODE NOT FOUND", -1);
 	}
-	
+		
 	// Retrieve an invoice from the "database"
 	// Should only be used after checking the invoice exists
 	public static Invoice getInvoice(int invoiceNum) {

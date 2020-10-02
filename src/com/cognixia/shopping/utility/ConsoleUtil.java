@@ -1,5 +1,6 @@
 package com.cognixia.shopping.utility;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.cognixia.shopping.model.Item;
@@ -11,6 +12,38 @@ public class ConsoleUtil {
 	// Ask for input string
 	public static String askInput() {
 		return "Choice: ";
+	}
+	
+	public static String askName() {
+		return "Name: ";
+	}
+	
+	public static String askEmail() {
+		return "Email: ";
+	}
+	
+	public static String askPassword() {
+		return "Password: ";
+	}
+	
+	public static String askPasswordCriteria() {
+		return "Password - 8 or more characters required: ";
+	}
+	
+	public static String askConfirmPassword() {
+		return "Confirm password: ";
+	}
+	
+	public static String askInvoiceNumber() {
+		return "Invoice number: ";
+	}
+	
+	public static String askCreateInvoice() {
+		return "Create a new invoice? (Y/N) ";
+	}
+	
+	public static String askItemIndex() {
+		return "Item index: ";
 	}
 	
 	// Internal utility strings
@@ -59,7 +92,7 @@ public class ConsoleUtil {
 		homeMenu += blockEdge();
 		homeMenu += "|    1. BUY AN ITEM                             |" + lineBreak();
 		homeMenu += "|    2. REPLACE AN ITEM                         |" + lineBreak();
-		homeMenu += "|    3. EXIT                                    |" + lineBreak();
+		homeMenu += "|    3. LOGOUT                                  |" + lineBreak();
 		homeMenu += blockEdge();
 		return homeMenu;
 	}
@@ -98,7 +131,7 @@ public class ConsoleUtil {
 	
 	// Under construction, need to figure out how user and invoice interact
 	// Invoice Menu - Display invoice
-	public static String invoiceMenu(int invoiceNum, String customerName) {
+	public static String invoiceMenu(int invoiceNum, String customerName, LocalDate invoiceDate) {
 		int index = 0;
 		List<Item> items = FakeDatabase.getInvoice(invoiceNum).getItemList();
 		String itemName = "";
@@ -109,7 +142,7 @@ public class ConsoleUtil {
 		
 		String invoiceMenu = headerInvoice();
 		invoiceMenu += blockEdge();
-		invoiceMenu += "|  Customer Name : " + customerName + printSpaces(29 - customerName.length()) + "|" + lineBreak();
+		invoiceMenu += "|  Customer Name : " + customerName + "  Date: " + invoiceDate + printSpaces(11 - customerName.length()) + "|" + lineBreak();
 		invoiceMenu += "|  Invoice No : " + invoiceNum + printSpaces(32 - Integer.toString(invoiceNum).length()) + "|" + lineBreak();
 		invoiceMenu += "|       Item       Item Code       Price        |" + lineBreak();
 		for(int i = 1; i < items.size() + 1; i++) {

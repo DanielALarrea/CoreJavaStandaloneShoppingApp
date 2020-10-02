@@ -1,5 +1,6 @@
 package com.cognixia.shopping.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,8 @@ public class Invoice {
 	
 	private List<Item> itemList;
 	private int invoiceNum;
+	private int userId;
+	private LocalDate timeOfCreation;
 	
 	public Invoice() {
 		this.itemList = new ArrayList<Item>();
@@ -14,14 +17,13 @@ public class Invoice {
 	
 	public Invoice(int invoiceNum) {
 		super();
-		this.invoiceNum = invoiceNum;
 		this.itemList = new ArrayList<Item>();
+		this.invoiceNum = invoiceNum;
 	}
 	
 	public Invoice(List<Item> itemList, int invoiceNum) {
 		super();
 		this.itemList = itemList;
-		this.invoiceNum = invoiceNum;
 	}
 	
 	public List<Item> getItemList() {
@@ -50,6 +52,22 @@ public class Invoice {
 
 	public void setInvoiceNum(int invoiceNum) {
 		this.invoiceNum = invoiceNum;
+	}
+	
+	public int getUserId() {
+		return userId;
+	}
+	
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	
+	public LocalDate getTimeOfCreation() {
+		return timeOfCreation;
+	}
+
+	public void setTimeOfCreation(LocalDate timeOfCreation) {
+		this.timeOfCreation = timeOfCreation;
 	}
 
 	@Override

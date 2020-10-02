@@ -28,9 +28,17 @@ public class ErrorUtil {
 		return "Invoice not found";
 	}
 	
+	public static String errorInvoiceExists() {
+		return "Invoice belongs to another user";
+	}
+	
 	// Display when user attempts to replace an item on an invoice that is not on the invoice
 	public static String errorReplaceItem() {
 		return "Item not on invoice";
+	}
+	
+	public static String errorMenu() {
+		return "Invalid input";
 	}
 
 }

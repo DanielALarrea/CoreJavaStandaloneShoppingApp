@@ -1,5 +1,7 @@
 package com.cognixia.shopping.controller;
 
+import java.time.LocalDate;
+
 import com.cognixia.shopping.model.Invoice;
 import com.cognixia.shopping.model.Item;
 import com.cognixia.shopping.repository.FakeDatabase;
@@ -11,6 +13,7 @@ public class ShoppingAppController {
 	
 	private static boolean isLoggedIn = false;
 	private static int loggedInUserId = -1;
+	private static int errorId = -1;
 	
 	public static boolean checkLoggedIn() {
 		return isLoggedIn;
@@ -20,8 +23,16 @@ public class ShoppingAppController {
 		return loggedInUserId;
 	}
 	
-	public static void register(String email, String password) {
-		FakeDatabase.addNewUser(email, password);
+	public static int checkErrorId() {
+		return errorId;
+	}
+	
+	public static void resetErrorId() {
+		errorId = -1;
+	}
+	
+	public static void register(String name, String email, String password) {
+		FakeDatabase.addNewUser(name, email, password);
 	}
 	
 	public static boolean validateRegisterPassword(String password, String confirmPass) {
@@ -29,11 +40,13 @@ public class ShoppingAppController {
 			if(password.equals(confirmPass)) {
 				return true;
 			} else {
-				System.out.println(ErrorUtil.errorPasswordMatch());
+//				System.out.println(ErrorUtil.errorPasswordMatch());
+				errorId = 1;
 				return false;
 			}
 		} else {
-			System.out.println(ErrorUtil.errorPasswordCriteria());
+//			System.out.println(ErrorUtil.errorPasswordCriteria());
+			errorId = 2;
 			return false;
 		}
 	}
@@ -47,7 +60,7 @@ public class ShoppingAppController {
 		if(InputValidationUtil.validLogin(email, password)) {
 			return true;
 		} else {
-			System.out.println(ErrorUtil.errorLogin());
+//			System.out.println(ErrorUtil.errorLogin());
 			return false;
 		}
 	}
@@ -65,13 +78,13 @@ public class ShoppingAppController {
 	// If new number, create new invoice with that number and add item to it
 	// If current number, add item to invoice
 	// Return to home page
-	public static void purchase(int itemIndex, int invoiceNum) {
+	public static void purchase(int itemIndex, int invoiceNum, int userId) {
 		boolean invoiceExists = false;
 		Item purchasedItem = FakeDatabase.getItem(itemIndex);
 		Invoice orderInvoice = new Invoice();
 		
 		for(Invoice iv: FakeDatabase.invoiceList) {
-			if(iv.getInvoiceNum() == invoiceNum) {
+			if(iv.getInvoiceNum() == invoiceNum && iv.getUserId() == userId) {
 				invoiceExists = true;
 				orderInvoice = iv;
 				break;
@@ -82,6 +95,8 @@ public class ShoppingAppController {
 		
 		if(!invoiceExists) {
 			orderInvoice.setInvoiceNum(invoiceNum);
+			orderInvoice.setUserId(userId);
+			orderInvoice.setTimeOfCreation(LocalDate.now());
 			FakeDatabase.addNewInvoice(orderInvoice);
 		} else {
 			FakeDatabase.updateInvoice(orderInvoice);
@@ -91,20 +106,14 @@ public class ShoppingAppController {
 	
 	// Check that the selected item exists in the database
 	public static boolean validatePurchase(int itemIndex) {
-		if(FakeDatabase.getItem(itemIndex - 1).getPrice() != -1) {
+		if(FakeDatabase.getItem(itemIndex).getPrice() > -1) {
 			return true;
 		}
 		
 		return false;
 	}
-	
-	// Invoice Replace part
-	// User selects Replace Item
-	// User is prompted for invoice number
-	// User is prompted for item index in invoice
-	// Some kind of date check for 15 days?
-	// Return item ?????
-	
+
+	// Replace(remove) the item in the selected invoice
 	public static void replace(int itemIndex, int invoiceNum) {
 		Invoice orderInvoice = FakeDatabase.getInvoice(invoiceNum);
 		
@@ -116,6 +125,14 @@ public class ShoppingAppController {
 	public static boolean validateReplace(int itemIndex, int invoiceNum) {
 		Invoice orderInvoice = FakeDatabase.getInvoice(invoiceNum);
 		if(InputValidationUtil.itemExistsInInvoice(itemIndex, orderInvoice)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static boolean validateInvoiceBelongsToUser(int invoiceNum, int userId) {
+		if(InputValidationUtil.invoiceBelongsToUser(invoiceNum, userId)) {
 			return true;
 		}
 		

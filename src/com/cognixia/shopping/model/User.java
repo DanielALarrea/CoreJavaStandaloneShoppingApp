@@ -5,24 +5,35 @@ import java.util.List;
 
 public class User {
 	
+	private String name;
 	private String email;
 	private String password;
 	private List<Invoice> invoiceList;
-	
-	public User(String email, String password) {
+
+	public User(String name, String email, String password) {
 		super();
+		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.invoiceList = new ArrayList<Invoice>();
 	}
 	
-	public User(String email, String password, List<Invoice> invoiceList) {
+	public User(String name, String email, String password, List<Invoice> invoiceList) {
 		super();
+		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.invoiceList = invoiceList;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getEmail() {
 		return email;
 	}

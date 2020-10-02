@@ -11,7 +11,7 @@ public class InputValidationUtil {
 	// Check that the password matches the criteria
 	// Criteria: Length greater than 8
 	public static boolean validPassword(String password) {
-		if (password.length() > 8) {
+		if (password.length() >= 8) {
 			return true;
 		} else {
 			return false;
@@ -44,6 +44,15 @@ public class InputValidationUtil {
 	public static boolean invoiceExists(int invoiceNum) {
 		for(Invoice iv: FakeDatabase.invoiceList) {
 			if(iv.getInvoiceNum() == invoiceNum) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean invoiceBelongsToUser(int invoiceNum, int userId) {
+		for(Invoice iv: FakeDatabase.invoiceList) {
+			if(iv.getInvoiceNum() == invoiceNum && iv.getUserId() == userId) {
 				return true;
 			}
 		}
